@@ -1,4 +1,6 @@
 /node_modules
+/docker/postgres/*
+.vscode/*
 /public/hot
 /public/storage
 /storage/*.key

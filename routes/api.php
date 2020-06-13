@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// TODO Вызывало ошибку в коснсоли при очистке кэша роутов пока что не нужно так что закомментил
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+    // return $request->user();
+// });

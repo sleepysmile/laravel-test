@@ -56,6 +56,13 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "docker:build": [
+            "composer run-script post-root-package-install",
+            "docker-compose build",
+            "docker-compose up -d",
+            "composer run-script post-create-project-cmd",
+            "docker exec -it laravel-test_app_1 php artisan migrate"
         ]
     }
 }
