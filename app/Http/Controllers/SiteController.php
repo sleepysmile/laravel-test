@@ -12,7 +12,7 @@ class SiteController extends Controller
     public function __invoke()
     {
         $publication = Publication::all();
-
+        
         return view('site.index', ['publication' => $publication]);
     }
 }

@@ -12,3 +12,21 @@
 */
 
 Route::get('/', 'SiteController');
+
+Route::namespace('Backend')->group(function () {
+    Route::resource('/backend/publications', 'PublicationController')->names('backend.publication');
+});
+
+
+Route::namespace('Frontend')->group(function () {
+    Route::resource('/publications', 'PublicationController')->names('frontend.publication');
+});
+// Route::group(['namespase' => 'Backend', 'prefix' => 'backend'], function () {
+//     Route::resource('publications', 'PublicationController')->names('backend.publication');
+// });
+
+// Route::group(['namespase' => 'Frontend', 'prefix' => '/'], function () {
+    // Route::resource('publications', 'PublicationController')->names('frontend.publication');
+// });
+
+
