@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Publication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class PublicationController extends Controller
+class PublicationController extends FrontendBaseController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        $publications = Publication::all();
+        $publications = Publication::all()->sortByDesc('id');
 
         return view('publication.index', ['publications' => $publications]);
     }
@@ -27,7 +27,7 @@ class PublicationController extends Controller
      */
     public function create()
     {
-        //
+        return view('publication.form');
     }
 
     /**
@@ -38,7 +38,19 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $publication = new Publication();
+        $publication->fill($request->post());
+
+        $path = Storage::putFile('publication', $request->file('image'));
+        if (!empty($path)) {
+            $publication->image_path = $path;
+        }
+
+        if ($publication->save()) {
+            return redirect()->route('frontend.publication.index');
+        }
+
+        return redirect()->route('frontend.publication.create');
     }
 
     /**

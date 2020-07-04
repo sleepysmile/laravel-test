@@ -2,7 +2,12 @@
 
 @section('content')
 
-    <form method="POST" action="{{route('publication.store')}}">
+    <form enctype="multipart/form-data" method="POST" action="{{route('frontend.publication.store')}}">
+        @csrf
+        <div class="form-group">
+            <label for="exampleInputEmail1">Image publication</label>
+            <input name="image" type="file" class="form-control">
+        </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Title publication</label>
             <input name="title" type="text" class="form-control" placeholder="Enter title">

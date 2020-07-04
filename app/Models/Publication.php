@@ -4,11 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class Publication
+ * @property string $image_path
+ * @property string $title
+ * @property string $text
+ * @property string $imageUrl
+ *
+ * @package App\Models
+ */
 class Publication extends Model
 {
-    use Sluggable;
-
     /**
      * Таблица, связанная с моделью.
      *
@@ -16,17 +24,31 @@ class Publication extends Model
      */
     protected $table = 'publication';
 
+    protected $fillable = [
+        'title',
+        'text'
+    ];
+
     /**
-     * Return the sluggable configuration array for this model.
+     * Тут можно выставлять значения по умолчанию для аттрибутов
      *
-     * @return array
+     * @var array
      */
-    public function sluggable()
+    protected $attributes = [];
+
+    /**
+     * url изображения
+     * геттеры строяться так get[NameOfAttribute]Attribute
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute(): string
     {
-        return [
-            'slug' => [
-                'source' => 'title'
-            ]
-        ];
+        if ($this->image_path) {
+            $storagePath = Storage::url($this->image_path);
+            return asset($storagePath);
+        }
+
+        return '';
     }
 }

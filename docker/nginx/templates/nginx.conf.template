@@ -3,15 +3,10 @@ server {
     listen 80 default_server;
     charset utf-8;
 
-    root /app/public/;
+    root /app/public;
     index index.php index.html index.htm;
 
     server_name ${SERVER_NAME};
-
-    location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|pdf|ppt|txt|bmp|rtf|js)$ {
-        access_log off;
-        expires max;
-    }
 
     location / {
         try_files $uri $uri/ /index.php?$args;
@@ -26,7 +21,6 @@ server {
     }
 
 }
-
 
 upstream php-fpm {
     server app:9000;
