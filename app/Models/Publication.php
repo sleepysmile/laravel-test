@@ -51,4 +51,13 @@ class Publication extends Model
 
         return '';
     }
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
 }
