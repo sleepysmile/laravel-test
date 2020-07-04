@@ -1,6 +1,6 @@
 version: "3"
 
-services: 
+services:
 
     app:
         container_name: "${APP_NAME}_app"
@@ -8,21 +8,20 @@ services:
         image: php:7.2-fpm
         volumes:
             - ./:/app
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/vhost.conf
-        depends_on: 
+            - ./docker/nginx/templates:/etc/nginx/templates
+        depends_on:
             - db
 
-    nginx: 
+    nginx:
         container_name: "${APP_NAME}_nginx"
-        image: nginx:1.13
-        environment: 
+        image: nginx:1.19
+        environment:
             - SERVER_NAME=${APP_URL}
         volumes:
             - ./:/app
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf.txt
+            - ./docker/nginx/templates:/etc/nginx/templates
         ports:
             - "80:80"
-        command: /bin/bash -c "envsubst '$$SERVER_NAME' < /etc/nginx/conf.d/nginx.conf.txt > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'" 
         depends_on:
             - app
 
@@ -30,13 +29,13 @@ services:
         container_name: "${APP_NAME}_db"
         image: postgres
         restart: always
-        volumes: 
+        volumes:
             - ./docker/postgres/data:/var/lib/postgresql/data
         environment:
             POSTGRES_PASSWORD: example
             POSTGRES_USER: postgres
             POSTGRES_DB: postgres
-        ports: 
+        ports:
             - '5432:5432'
 
     mailcatcher:
@@ -48,7 +47,7 @@ services:
     adminer:
         container_name: "${APP_NAME}_adminer"
         image: adminer
-        ports: 
+        ports:
             - 8080:8080
-        links: 
+        links:
             - db
