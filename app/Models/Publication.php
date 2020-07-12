@@ -24,6 +24,11 @@ class Publication extends Model
      */
     protected $table = 'publication';
 
+    /**
+     * Какая то странная штука возможно для апи
+     *
+     * @var string[]
+     */
     protected $fillable = [
         'title',
         'text'
@@ -52,6 +57,12 @@ class Publication extends Model
         return '';
     }
 
+    /**
+     * Плагин для генерирования слага
+     * @todo Настроить на замену пробелов на -
+     *
+     * @return array
+     */
     public function sluggable()
     {
         return [

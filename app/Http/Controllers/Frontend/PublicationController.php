@@ -40,9 +40,10 @@ class PublicationController extends FrontendBaseController
     {
         $publication = new Publication();
         $publication->fill($request->post());
+        $file = $request->file('image');
 
-        $path = Storage::putFile('publication', $request->file('image'));
-        if (!empty($path)) {
+        if ($file) {
+            $path = Storage::putFile('publication', $file);
             $publication->image_path = $path;
         }
 
